@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="POST" name="Formulário" id="infor">
+        <fieldset>
+            <legend> Trabalhe conosco</legend>
+            <div>
+                <label for="idNome">
+                    Nome completo :
+                    <input 
+                    type="text"
+                    name="nome_completo"
+                    id="idNome"
+                    placeholder="Informe seu nome"
+                    size="40">
+                </label>
+            </div>
+            <div> 
+                <p>Vagas disponíveis</p>
+                <label for="frontend">Dev Front-End JR
+                    <input type="radio" name="cargo" value="Front-End" id="frontend">
+                </label>
+                <label for="designer"> Designer UI/UX
+                    <input type="radio" name="cargo" value="designer">
+                </label>        
+                <div>
+                    <div>
+                        <p>Habilidades</p>
+                        <label for="idHTML">HTML
+                            <input type="checkbox" name="habilidades" id="idHTML" value="HTML">
+                            <label for="idjs">Java script
+                            <input type="checkbox"  name="habilidades" id="idjs" value="Java Script">
+                            <label for="idjs">Figma
+                                <input type="checkbox"  name="habilidades" id="idjs" value="Figma">
+                        </label>
+                    </div>
+                    <div>
+                        <label for="id_textarea"
+                        >Cursos:
+                    <textarea 
+                    name="cursos_textarea" 
+                    id="id_textarea"
+                    cols="30"
+                    rows="4"
+                    ></textarea>
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit">Enviar</button>
+
+<script type="module">
+// Importação
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-analytics.js";
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyAFp5DqfQ050g5TEBJhS8AcO0y8TAwhEA4",
+authDomain: "mislley-60adb.firebaseapp.com",
+projectId: "mislley-60adb",
+storageBucket: "mislley-60adb.appspot.com",
+messagingSenderId: "919725425416",
+appId: "1:919725425416:web:2b835c7acd67b7e13ca2bd",
+measurementId: "G-6EDZ3VCPP5"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const database = getDatabase();
+
+        let form = document.getElementById("infor");
+        form.addEventListener("submit",(e)=>{
+        e.preventDefault();
+        
+        let vetor = [];
+
+        for(let i = 0; i < form.habilidades.length; i++){
+if(form.habilidades[i].checked){
+vetor[i] = form.habilidades[i].value;
+console.log(form.habilidades[i].value)
+}
+}
+
+        alert(`
+Nome: ${form.nome_completo.value}
+Vaga: ${form.cargo.value}
+Habilidades: ${vetor}
+Cursos: ${form.cursos_textarea.value}
+`);
+
+// Enviar os dados para o Firebase
+const usersRef = ref(database, 'users');
+push(usersRef, {
+nome: form.nome_completo.value,
+vaga: form.cargo.value,
+checks: vetor,
+cursos: form.cursos_textarea.value
+
+}).then(() => {
+alert('Dados enviados com sucesso!');
+console.log("Dados enviados com sucesso!");
+// Faça qualquer ação adicional aqui, como redirecionar o usuário ou exibir uma mensagem de sucesso.
+}).catch((error) => {
+console.error('Erro ao enviar dados:', error);
+});
+
+})
+
+    </script>        
+</body>
+</html>
