@@ -20,6 +20,13 @@
                     size="40">
                 </label>
             </div>
+            <br>
+            <div>
+                <label for="iddata"
+                >Data de Nascimento:
+                <input type="date" name="data" id="iddata">
+            </label>
+            </div>
             <div> 
                 <p>Vagas disponíveis</p>
                 <label for="frontend">Dev Front-End JR
@@ -93,6 +100,7 @@ Nome: ${form.nome_completo.value}
 Vaga: ${form.cargo.value}
 Habilidades: ${vetor}
 Cursos: ${form.cursos_textarea.value}
+Data de Nascimento: ${form.iddata.value}
 `);
 
 // Enviar os dados para o Firebase
@@ -101,7 +109,8 @@ push(usersRef, {
 nome: form.nome_completo.value,
 vaga: form.cargo.value,
 checks: vetor,
-cursos: form.cursos_textarea.value
+cursos: form.cursos_textarea.value,
+data: form.iddata.value
 
 }).then(() => {
 alert('Dados enviados com sucesso!');
